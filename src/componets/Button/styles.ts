@@ -21,4 +21,5 @@ export const ButtonLink = styled(Link)`
     font-size: 16px;
     font-weight: bold;
     text-decoration: none;
+    border-radius: 8px;
 `;
