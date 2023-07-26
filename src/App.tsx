@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Header from './componets/Header';
 import { GlobalStyle } from './styles';
 import Rotas from './Routes';
+import Footer from './componets/Footer';
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
                 <Header />
             </div>
             <Rotas />
+            <Footer />
         </BrowserRouter>
     );
 }
