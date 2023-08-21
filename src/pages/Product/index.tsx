@@ -1,6 +1,9 @@
 import { useParams } from 'react-router-dom';
 import Hero from '../../componets/Hero';
 import Section from '../../componets/Section';
+import Gallery from '../../componets/Gallery';
+
+import resident from '../../assets/images/resident.png';
 
 const Product = () => {
     const { id } = useParams();
@@ -35,6 +38,7 @@ const Product = () => {
                     ser ajustadas nas configurações do jogo.
                 </p>
             </Section>
+            <Gallery name="Jogo teste" defaultCover={resident} />
         </>
     );
 };
