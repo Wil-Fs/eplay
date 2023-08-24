@@ -1,11 +1,9 @@
 import { styled } from 'styled-components';
 
-import game from '../../assets/images/fundo_hogwarts.png';
 import { Cores } from '../../styles';
 import { TagContainer } from '../Tag/styles';
 
 export const Banner = styled.div`
-    background-image: url(${game});
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;

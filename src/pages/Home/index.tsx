@@ -1,104 +1,62 @@
-import Game from '../../models/Game';
 import Banner from '../../componets/Banner';
 import ProductsList from '../../componets/ProductsList';
 
-import resident from '../../assets/images/resident.png';
-import diablo from '../../assets/images/diablo.png';
-import zelda from '../../assets/images/zelda.png';
-import starWars from '../../assets/images/star_wars.png';
+import { useEffect, useState } from 'react';
 
-const promocoes: Game[] = [
-    {
-        id: 1,
-        category: 'Ação',
-        description:
-            'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-        title: 'Resident Evil 4',
-        system: 'Windows',
-        infos: ['10%', 'R$ 250,00'],
-        image: resident
-    },
-    {
-        id: 2,
-        category: 'Ação',
-        description:
-            'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-        title: 'Diablo 4',
-        system: 'PS5',
-        infos: ['5%', 'R$ 290,00'],
-        image: diablo
-    },
-    {
-        id: 3,
-        category: 'Ação',
-        description:
-            'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-        title: 'Zelda',
-        system: 'Windows',
-        infos: ['10%', 'R$ 250,00'],
-        image: zelda
-    },
-    {
-        id: 4,
-        category: 'Ação',
-        description:
-            'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-        title: 'Star Wars',
-        system: 'Windows',
-        infos: ['10%', 'R$ 250,00'],
-        image: starWars
-    }
-];
+export interface GalleryItem {
+    type: 'image' | 'video';
+    url: string;
+}
 
-const emBreve: Game[] = [
-    {
-        id: 1,
-        category: 'Ação',
-        description:
-            'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-        title: 'Resident Evil 4',
-        system: 'Windows',
-        infos: ['17/05'],
-        image: resident
-    },
-    {
-        id: 2,
-        category: 'Ação',
-        description:
-            'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-        title: 'Diablo 4',
-        system: 'PS5',
-        infos: ['17/05'],
-        image: diablo
-    },
-    {
-        id: 3,
-        category: 'Ação',
-        description:
-            'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-        title: 'Zelda',
-        system: 'Windows',
-        infos: ['17/05'],
-        image: zelda
-    },
-    {
-        id: 4,
-        category: 'Ação',
-        description:
-            'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-        title: 'Star Wars',
-        system: 'Windows',
-        infos: ['17/05'],
-        image: starWars
-    }
-];
+export type Game = {
+    id: number;
+    name: string;
+    description: string;
+    release_date?: string;
+    prices: {
+        discount?: string;
+        old?: number;
+        current?: number;
+    };
+    details: {
+        category: string;
+        system: string;
+        developer: string;
+        publisher: string;
+        languages: string[];
+    };
+    media: {
+        thumbnail: string;
+        cover: string;
+        gallery: GalleryItem[];
+    };
+};
 
-const Home = () => (
-    <>
-        <Banner />
-        <ProductsList games={promocoes} title="Promoções" background="gray" />
-        <ProductsList games={emBreve} title="Em breve" background="black" />
-    </>
-);
+const Home = () => {
+    const [promocoes, setPromocoes] = useState<Game[]>([]);
+    const [emBreve, setEmBreve] = useState<Game[]>([]);
+
+    useEffect(() => {
+        fetch('https://fake-api-tau.vercel.app/api/eplay/promocoes')
+            .then((res) => res.json())
+            .then((res) => setPromocoes(res));
+
+        fetch('https://fake-api-tau.vercel.app/api/eplay/em-breve')
+            .then((res) => res.json())
+            .then((res) => setEmBreve(res));
+    }, []);
+
+    return (
+        <>
+            <Banner />
+            <ProductsList
+                games={promocoes}
+                title="Promoções"
+                background="gray"
+            />
+            <ProductsList games={emBreve} title="Em breve" background="black" />
+        </>
+    );
+};
 
 export default Home;

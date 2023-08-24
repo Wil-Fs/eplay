@@ -10,11 +10,7 @@ import iconZoom from '../../assets/images/zoom.png';
 import iconClose from '../../assets/images/fechar.png';
 import { useState } from 'react';
 import { type } from 'os';
-
-interface GalleryItem {
-    type: 'image' | 'video';
-    url: string;
-}
+import { GalleryItem } from '../../pages/Home';
 
 const mock: GalleryItem[] = [
     {
@@ -34,13 +30,14 @@ const mock: GalleryItem[] = [
 type Props = {
     defaultCover: string;
     name: string;
+    itens: GalleryItem[];
 };
 
 interface ModalState extends GalleryItem {
     isVisible: boolean;
 }
 
-const Gallery = ({ defaultCover, name }: Props) => {
+const Gallery = ({ defaultCover, name, itens }: Props) => {
     const [modal, setModal] = useState<ModalState>({
         isVisible: false,
         type: 'image',
@@ -64,7 +61,7 @@ const Gallery = ({ defaultCover, name }: Props) => {
         <>
             <Section title="Galeria" background="black">
                 <Items>
-                    {mock.map((item, index) => (
+                    {itens.map((item, index) => (
                         <Item
                             onClick={() => {
                                 setModal({
