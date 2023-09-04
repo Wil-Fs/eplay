@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 
 import { Cores } from '../../styles';
 import { TagContainer } from '../Tag/styles';
+import { ButtonContainer } from '../Button/styles';
 
 export const Banner = styled.div`
     background-repeat: no-repeat;
@@ -53,5 +54,9 @@ export const Infos = styled.div`
             display: block;
             text-decoration: line-through;
         }
+    }
+
+    ${ButtonContainer} {
+        cursor: pointer;
     }
 `;
