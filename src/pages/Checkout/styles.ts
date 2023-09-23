@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Cores } from '../../styles';
+import { TagContainer } from '../../componets/Tag/styles';
 
 type InputGroupProps = {
     maxWidth?: string;
@@ -12,6 +13,12 @@ type RowProps = {
 type TabButtonProps = {
     isActive: boolean;
 };
+
+export const Form = styled.form`
+    ${TagContainer} {
+        cursor: pointer;
+    }
+`;
 
 export const Row = styled.div<RowProps>`
     display: flex;
