@@ -1,14 +1,7 @@
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
-import {
-    HeaderBar,
-    Links,
-    LinkItem,
-    LinkCart,
-    Hamburguer,
-    HeaderRow,
-    NavMobile
-} from './styles';
+import * as S from './styles';
 
 import logoHeader from '../../assets/images/logo.svg';
 import logoCarrinho from '../../assets/images/carrinho.svg';
@@ -25,51 +18,84 @@ const Header = () => {
     const [navMenu, setNavMenu] = useState(false);
 
     return (
-        <HeaderBar>
-            <HeaderRow>
+        <S.HeaderBar>
+            <S.HeaderRow>
                 <div>
-                    <Hamburguer onClick={() => setNavMenu(!navMenu)}>
+                    <S.Hamburguer onClick={() => setNavMenu(!navMenu)}>
                         <span />
                         <span />
                         <span />
-                    </Hamburguer>
+                    </S.Hamburguer>
                     <Link to={'/'}>
                         <img src={logoHeader} alt="Logo EPLAY" />
                     </Link>
                     <nav>
-                        <Links>
-                            <LinkItem>
-                                <Link to={'/categories'}>Categorias</Link>
-                            </LinkItem>
-                            <LinkItem>
-                                <a href="#">Novidades</a>
-                            </LinkItem>
-                            <LinkItem>
-                                <a href="#">Promoções</a>
-                            </LinkItem>
-                        </Links>
+                        <S.Links>
+                            <S.LinkItem>
+                                <Link
+                                    title="Clique aqui para acessar a página de cartegorias"
+                                    to={'/categories'}
+                                >
+                                    Categorias
+                                </Link>
+                            </S.LinkItem>
+                            <S.LinkItem>
+                                <HashLink
+                                    to={'/#coming-soon'}
+                                    title="Clique aqui para acessar a página de novidades"
+                                >
+                                    Novidades
+                                </HashLink>
+                            </S.LinkItem>
+                            <S.LinkItem>
+                                <HashLink
+                                    to={'/#on-sale'}
+                                    title="Clique aqui para acessar a página de categorias"
+                                >
+                                    Promoções
+                                </HashLink>
+                            </S.LinkItem>
+                        </S.Links>
                     </nav>
                 </div>
-                <LinkCart onClick={() => dispatch(openCart())}>
+                <S.LinkCart onClick={() => dispatch(openCart())}>
                     {itens.length}
                     <span> - Produtos </span>
                     <img src={logoCarrinho} alt="Carrinho icone" />
-                </LinkCart>
-            </HeaderRow>
-            <NavMobile className={navMenu ? 'isOpen' : ''}>
-                <Links>
-                    <LinkItem>
-                        <Link to={'/categories'}>Categorias</Link>
-                    </LinkItem>
-                    <LinkItem>
-                        <a href="#">Novidades</a>
-                    </LinkItem>
-                    <LinkItem>
-                        <a href="#">Promoções</a>
-                    </LinkItem>
-                </Links>
-            </NavMobile>
-        </HeaderBar>
+                </S.LinkCart>
+            </S.HeaderRow>
+            <S.NavMobile className={navMenu ? 'isOpen' : ''}>
+                <S.Links>
+                    <S.LinkItem>
+                        <Link
+                            title="Clique aqui para acessar a página de cartegorias"
+                            to={'/categories'}
+                            onClick={() => setNavMenu(false)}
+                        >
+                            Categorias
+                        </Link>
+                    </S.LinkItem>
+                    <S.LinkItem>
+                        <HashLink
+                            to={'/#coming-soon'}
+                            title="Clique aqui para acessar a página de novidades"
+                            onClick={() => setNavMenu(false)}
+                        >
+                            Novidades
+                        </HashLink>
+                    </S.LinkItem>
+                    <S.LinkItem>
+                        <HashLink
+                            to={'/#on-sale'}
+                            title="Clique aqui para acessar a página de categorias"
+                            onClick={() => setNavMenu(false)}
+                        >
+                            Promoções
+                        </HashLink>
+                    </S.LinkItem>
+                </S.Links>
+            </S.NavMobile>
+        </S.HeaderBar>
     );
 };
 

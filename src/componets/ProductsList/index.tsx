@@ -3,6 +3,7 @@ import Product from '../Product';
 import { List } from './styles';
 import { Container } from '../Section/styles';
 import { Game } from '../../pages/Home';
+import { parseToBrl } from '../../utils';
 
 export type Props = {
     title: string;
@@ -10,12 +11,6 @@ export type Props = {
     games: Game[];
     id?: string;
 };
-
-export const formatPrice = (price = 0) =>
-    new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    }).format(price);
 
 const ProductsList = ({ title, background, games, id }: Props) => {
     const getGameTags = (game: Game) => {
@@ -30,7 +25,7 @@ const ProductsList = ({ title, background, games, id }: Props) => {
         }
 
         if (game.prices.current) {
-            tags.push(formatPrice(game.prices.current));
+            tags.push(parseToBrl(game.prices.current));
         }
 
         return tags;

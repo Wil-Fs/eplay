@@ -1,17 +1,18 @@
 import styled from 'styled-components';
 
-import { Cores } from '../../styles';
+import { colors } from '../../styles';
 
 import { TagContainer } from '../Tag/styles';
 import { Link } from 'react-router-dom';
 
 export const Card = styled(Link)`
-    background-color: ${Cores.cinza};
+    background-color: ${colors.gray};
     border-radius: 8px;
     padding: 8px;
     position: relative;
     text-decoration: none;
-    color: ${Cores.branca};
+    color: ${colors.white};
+    height: 100%;
 
     > img {
         display: block;

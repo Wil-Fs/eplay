@@ -1,19 +1,11 @@
 import Button from '../Button';
-import {
-    Overlay,
-    CartContainer,
-    SideBar,
-    ProducList,
-    Prices,
-    Quantity,
-    Item
-} from './styles';
+import * as S from './styles';
 
 import Tag from '../Tag';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootReducer } from '../../store';
 import { closeCart, remove } from '../../store/reducers/cart';
-import { formatPrice } from '../ProductsList';
+import { parseToBrl } from '../../utils';
 
 const Cart = () => {
     const { isOpen, itens } = useSelector((state: RootReducer) => state.cart);
@@ -28,12 +20,12 @@ const Cart = () => {
     };
 
     return (
-        <CartContainer className={!isOpen ? '' : 'isOpen'}>
-            <Overlay onClick={() => dispatch(closeCart())} />
-            <SideBar>
-                <ProducList>
+        <S.CartContainer className={!isOpen ? '' : 'isOpen'}>
+            <S.Overlay onClick={() => dispatch(closeCart())} />
+            <S.SideBar>
+                <S.ProducList>
                     {itens.map((game) => (
-                        <Item key={game.id}>
+                        <S.Item key={game.id}>
                             <img
                                 className={'game'}
                                 src={game.media.thumbnail}
@@ -42,28 +34,28 @@ const Cart = () => {
                                 <h3>{game.name}</h3>
                                 <Tag>{game.details.system}</Tag>
                                 <Tag>{game.details.category}</Tag>
-                                <span>{formatPrice(game.prices.current)}</span>
+                                <span>{parseToBrl(game.prices.current)}</span>
                             </div>
                             <button
                                 onClick={() => dispatch(remove(game.id))}
                                 className={'iconClose'}
                             />
-                        </Item>
+                        </S.Item>
                     ))}
-                </ProducList>
-                <Quantity>{itens.length} jogos(s) no carrinho</Quantity>
-                <Prices>
-                    Total de {formatPrice(getTotalPrice())}{' '}
+                </S.ProducList>
+                <S.Quantity>{itens.length} jogos(s) no carrinho</S.Quantity>
+                <S.Prices>
+                    Total de {parseToBrl(getTotalPrice())}{' '}
                     <span>Em até 6x sem juros</span>
-                </Prices>
+                </S.Prices>
                 <Button
                     title="clique aqui para continar com a compra"
                     type="button"
                 >
                     Continuar com a compra
                 </Button>
-            </SideBar>
-        </CartContainer>
+            </S.SideBar>
+        </S.CartContainer>
     );
 };
 

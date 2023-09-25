@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { Game } from '../../pages/Home';
 import Button from '../Button';
-import { formatPrice } from '../ProductsList';
+
 import Tag from '../Tag';
 import * as S from './styles';
 import { add } from '../../store/reducers/cart';
+import { parseToBrl } from '../../utils';
 
 export type Props = {
     game: Game;
@@ -28,10 +29,10 @@ const Hero = ({ game }: Props) => {
                                 {game.prices.discount && (
                                     <span>
                                         {' '}
-                                        De {formatPrice(game.prices.old)}
+                                        De {parseToBrl(game.prices.old)}
                                     </span>
                                 )}
-                                Por {formatPrice(game.prices.current)}
+                                Por {parseToBrl(game.prices.current)}
                             </p>
                             <Button
                                 onClick={() => dispatch(add(game))}

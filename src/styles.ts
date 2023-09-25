@@ -1,11 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 
-export const Cores = {
-    branca: '#eee',
-    preto: '#111111',
-    cinza: '#333',
-    cinzaClaro: '#A3A3A3',
-    verde: '#10ac84',
+export const colors = {
+    white: '#eee',
+    black: '#111111',
+    gray: '#333',
+    lightGray: '#A3A3A3',
+    green: '#10ac84',
     transparent: ''
 };
 
@@ -20,13 +20,13 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         font-family: 'Roboto', sans-serif;
-        color: ${Cores.branca};
+        color: ${colors.white};
         list-style: none;
         text-decoration: none;
     }
 
     body {
-        background-color: ${Cores.preto};
+        background-color: ${colors.black};
         padding-top: 40px;
     }
 
