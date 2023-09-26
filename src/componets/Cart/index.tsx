@@ -6,10 +6,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootReducer } from '../../store';
 import { closeCart, remove } from '../../store/reducers/cart';
 import { parseToBrl } from '../../utils';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
     const { isOpen, itens } = useSelector((state: RootReducer) => state.cart);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const getTotalPrice = () => {
         let totalPrice = 0;
@@ -17,6 +19,11 @@ const Cart = () => {
         itens.map((price) => (totalPrice += Number(price.prices.current)));
 
         return totalPrice;
+    };
+
+    const gotToCheckout = () => {
+        dispatch(closeCart());
+        navigate('/checkout');
     };
 
     return (
@@ -51,6 +58,7 @@ const Cart = () => {
                 <Button
                     title="clique aqui para continar com a compra"
                     type="button"
+                    onClick={gotToCheckout}
                 >
                     Continuar com a compra
                 </Button>

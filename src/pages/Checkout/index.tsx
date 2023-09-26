@@ -8,11 +8,14 @@ import cartao from '../../assets/images/cartao.png';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { usePurchaseMutation } from '../../services/api';
+import { useSelector } from 'react-redux';
+import { RootReducer } from '../../store';
+import { Navigate } from 'react-router-dom';
 
 const Checkout = () => {
     const [payWithCard, setPayWithCard] = useState(false);
-
     const [purchase, { data, isSuccess }] = usePurchaseMutation();
+    const { itens } = useSelector((state: RootReducer) => state.cart);
 
     const form = useFormik({
         initialValues: {
@@ -118,16 +121,17 @@ const Checkout = () => {
             })
     });
 
-    console.log(data);
-
-    const getErrorMessage = (fieldName: string, message?: string) => {
+    const checkInputHasError = (fieldName: string) => {
         const isTouched = fieldName in form.touched;
         const isInvalid = fieldName in form.errors;
+        const hasError = isTouched && isInvalid;
 
-        if (isTouched && isInvalid) return message;
-
-        return '';
+        return hasError;
     };
+
+    if (itens.length === 0) {
+        return <Navigate to="/" />;
+    }
 
     return (
         <div className={'Container'}>
@@ -188,13 +192,12 @@ const Checkout = () => {
                                         type="text"
                                         name="fullName"
                                         value={form.values.fullName}
+                                        className={
+                                            checkInputHasError('fullName')
+                                                ? 'error'
+                                                : ''
+                                        }
                                     />
-                                    <small>
-                                        {getErrorMessage(
-                                            'fullName',
-                                            form.errors.fullName
-                                        )}
-                                    </small>
                                 </InputGroup>
                                 <InputGroup>
                                     <label htmlFor="email">E-mail</label>
@@ -205,13 +208,12 @@ const Checkout = () => {
                                         id="email"
                                         name="email"
                                         value={form.values.email}
+                                        className={
+                                            checkInputHasError('email')
+                                                ? 'error'
+                                                : ''
+                                        }
                                     />
-                                    <small>
-                                        {getErrorMessage(
-                                            'email',
-                                            form.errors.email
-                                        )}
-                                    </small>
                                 </InputGroup>
                                 <InputGroup>
                                     <label htmlFor="cpf">CPF</label>
@@ -222,13 +224,12 @@ const Checkout = () => {
                                         id="cpf"
                                         name="cpf"
                                         value={form.values.cpf}
+                                        className={
+                                            checkInputHasError('cpf')
+                                                ? 'error'
+                                                : ''
+                                        }
                                     />
-                                    <small>
-                                        {getErrorMessage(
-                                            'cpf',
-                                            form.errors.cpf
-                                        )}
-                                    </small>
                                 </InputGroup>
                             </Row>
                             <h3 className="margin-top">
@@ -246,13 +247,12 @@ const Checkout = () => {
                                         id="deliveryEmail"
                                         name="deliveryEmail"
                                         value={form.values.deliveryEmail}
+                                        className={
+                                            checkInputHasError('deliveryEmail')
+                                                ? 'error'
+                                                : ''
+                                        }
                                     />
-                                    <small>
-                                        {getErrorMessage(
-                                            'deliveryEmail',
-                                            form.errors.deliveryEmail
-                                        )}
-                                    </small>
                                 </InputGroup>
                                 <InputGroup>
                                     <label htmlFor="confirmDeliveryEmail">
@@ -265,13 +265,14 @@ const Checkout = () => {
                                         id="confirmDeliveryEmail"
                                         name="confirmDeliveryEmail"
                                         value={form.values.confirmDeliveryEmail}
+                                        className={
+                                            checkInputHasError(
+                                                'confirmDeliveryEmail'
+                                            )
+                                                ? 'error'
+                                                : ''
+                                        }
                                     />
-                                    <small>
-                                        {getErrorMessage(
-                                            'confirmDeliveryEmail',
-                                            form.errors.confirmDeliveryEmail
-                                        )}
-                                    </small>
                                 </InputGroup>
                             </Row>
                         </>
@@ -309,13 +310,14 @@ const Checkout = () => {
                                                     value={
                                                         form.values.cardOwner
                                                     }
+                                                    className={
+                                                        checkInputHasError(
+                                                            'cardOwner'
+                                                        )
+                                                            ? 'error'
+                                                            : ''
+                                                    }
                                                 />
-                                                <small>
-                                                    {getErrorMessage(
-                                                        'cardOwner',
-                                                        form.errors.cardOwner
-                                                    )}
-                                                </small>
                                             </InputGroup>
                                             <InputGroup>
                                                 <label htmlFor="cpfCardOwner">
@@ -330,13 +332,14 @@ const Checkout = () => {
                                                     value={
                                                         form.values.cpfCardOwner
                                                     }
+                                                    className={
+                                                        checkInputHasError(
+                                                            'cpfCardOwner'
+                                                        )
+                                                            ? 'error'
+                                                            : ''
+                                                    }
                                                 />
-                                                <small>
-                                                    {getErrorMessage(
-                                                        'cpfCardOwner',
-                                                        form.errors.cpfCardOwner
-                                                    )}
-                                                </small>
                                             </InputGroup>
                                             <InputGroup>
                                                 <label htmlFor="carDisplayName">
@@ -352,14 +355,14 @@ const Checkout = () => {
                                                         form.values
                                                             .cardDisplayName
                                                     }
+                                                    className={
+                                                        checkInputHasError(
+                                                            'cardDisplayName'
+                                                        )
+                                                            ? 'error'
+                                                            : ''
+                                                    }
                                                 />
-                                                <small>
-                                                    {getErrorMessage(
-                                                        'cardDisplayName',
-                                                        form.errors
-                                                            .cardDisplayName
-                                                    )}
-                                                </small>
                                             </InputGroup>
                                             <InputGroup>
                                                 <label htmlFor="cardNumber">
@@ -374,13 +377,14 @@ const Checkout = () => {
                                                     value={
                                                         form.values.cardNumber
                                                     }
+                                                    className={
+                                                        checkInputHasError(
+                                                            'cardNumber'
+                                                        )
+                                                            ? 'error'
+                                                            : ''
+                                                    }
                                                 />
-                                                <small>
-                                                    {getErrorMessage(
-                                                        'cardNumber',
-                                                        form.errors.cardNumber
-                                                    )}
-                                                </small>
                                             </InputGroup>
                                             <InputGroup maxWidth="123px">
                                                 <label htmlFor="expiresMonth">
@@ -395,13 +399,14 @@ const Checkout = () => {
                                                     value={
                                                         form.values.expiresMonth
                                                     }
+                                                    className={
+                                                        checkInputHasError(
+                                                            'expiresMonth'
+                                                        )
+                                                            ? 'error'
+                                                            : ''
+                                                    }
                                                 />
-                                                <small>
-                                                    {getErrorMessage(
-                                                        'expiresMonth',
-                                                        form.errors.expiresMonth
-                                                    )}
-                                                </small>
                                             </InputGroup>
                                             <InputGroup maxWidth="123px">
                                                 <label htmlFor="expiresYear">
@@ -416,13 +421,14 @@ const Checkout = () => {
                                                     value={
                                                         form.values.expiresYear
                                                     }
+                                                    className={
+                                                        checkInputHasError(
+                                                            'expiresYear'
+                                                        )
+                                                            ? 'error'
+                                                            : ''
+                                                    }
                                                 />
-                                                <small>
-                                                    {getErrorMessage(
-                                                        'expiresYear',
-                                                        form.errors.expiresYear
-                                                    )}
-                                                </small>
                                             </InputGroup>
                                             <InputGroup maxWidth="48px">
                                                 <label htmlFor="cardCode">
@@ -435,13 +441,14 @@ const Checkout = () => {
                                                     id="cardCode"
                                                     name="cardCode"
                                                     value={form.values.cardCode}
+                                                    className={
+                                                        checkInputHasError(
+                                                            'cardCode'
+                                                        )
+                                                            ? 'error'
+                                                            : ''
+                                                    }
                                                 />
-                                                <small>
-                                                    {getErrorMessage(
-                                                        'cardCode',
-                                                        form.errors.cardCode
-                                                    )}
-                                                </small>
                                             </InputGroup>
                                         </Row>
                                         <Row marginTop="24px">
@@ -452,6 +459,13 @@ const Checkout = () => {
                                                     name="installments"
                                                     value={
                                                         form.values.installments
+                                                    }
+                                                    className={
+                                                        checkInputHasError(
+                                                            'installments'
+                                                        )
+                                                            ? 'error'
+                                                            : ''
                                                     }
                                                 >
                                                     <option>
@@ -464,12 +478,6 @@ const Checkout = () => {
                                                         3x de R$ 200,00
                                                     </option>
                                                 </select>
-                                                <small>
-                                                    {getErrorMessage(
-                                                        'installments',
-                                                        form.errors.installments
-                                                    )}
-                                                </small>
                                             </InputGroup>
                                         </Row>
                                     </>
