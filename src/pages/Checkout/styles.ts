@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { colors } from '../../styles';
-import { TagContainer } from '../../componets/Tag/styles';
+import { breakPoints, colors } from '../../styles';
 
 type InputGroupProps = {
     maxWidth?: string;
@@ -14,18 +13,17 @@ type TabButtonProps = {
     isActive: boolean;
 };
 
-export const Form = styled.form`
-    ${TagContainer} {
-        cursor: pointer;
-    }
-`;
-
 export const Row = styled.div<RowProps>`
     display: flex;
     column-gap: 24px;
     flex-wrap: wrap;
     margin-top: ${(props) => props.marginTop || '0'};
     align-items: flex-end;
+
+    @media (max-width: ${breakPoints.tablet}) {
+        display: block;
+        margin-top: 16px;
+    }
 `;
 
 export const InputGroup = styled.div<InputGroupProps>`
@@ -58,6 +56,10 @@ export const InputGroup = styled.div<InputGroupProps>`
         font-size: 14px;
         line-height: 22px;
     }
+
+    @media (max-width: ${breakPoints.tablet}) {
+        margin-top: 16px;
+    }
 `;
 
 export const TabButton = styled.button<TabButtonProps>`
@@ -75,5 +77,10 @@ export const TabButton = styled.button<TabButtonProps>`
 
     img {
         margin-right: 8px;
+    }
+
+    @media (max-width: ${breakPoints.tablet}) {
+        margin-top: 8px;
+        width: 100%;
     }
 `;

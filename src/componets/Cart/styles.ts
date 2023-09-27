@@ -94,6 +94,13 @@ export const Item = styled.li`
         margin: 8px 8px 16px 0;
     }
 
+    .emptyCart {
+        font-size: 14px;
+        line-height: 22px;
+        color: ${colors.white};
+        text-align: center;
+    }
+
     button {
         background-image: url(${iconClose});
         width: 16px;
